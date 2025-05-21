@@ -1,20 +1,11 @@
-/* Dans votre fichier CSS principal */
-.table-responsive {
-  border-radius: 0.5rem;
-  overflow: hidden;
-}
-
-.table-hover tbody tr:hover {
-  background-color: rgba(0, 0, 0, 0.02);
-}
-
 .card {
-  border: none;
+  transition: transform 0.2s ease;
 }
 
-/* Animation pour les boutons d'action */
-.btn-outline-primary:hover, 
-.btn-outline-secondary:hover, 
-.btn-outline-danger:hover {
-  color: white !important;
+.card:hover {
+  transform: scale(1.01);
+}
+
+.btn {
+  transition: all 0.2s ease;
 }

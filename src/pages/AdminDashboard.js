@@ -3,7 +3,10 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import UserManagement from '../components/admin/UserManagement';
 import EventManagement from '../components/admin/EventManagement';
-//import './styles/adminDashboard.css';
+import ReclamationManagement from '../components/admin/ReclamationManagement';
+import ReservationManagement from '../components/admin/ReservationManagement';
+import AdminFeedbacks from '../components/admin/AdminFeedbacks';
+import '../styles/adminDashboard.css';
 
 export default function AdminDashboard() {
   const { user, logout } = useAuth();
@@ -17,64 +20,62 @@ export default function AdminDashboard() {
     }
   };
 
+  const navItems = [
+    { id: 'events', label: 'Gestion Événements', icon: 'fas fa-calendar-alt' },
+    { id: 'users', label: 'Gestion Utilisateurs', icon: 'fas fa-users' },
+    { id: 'reclamation', label: 'Réclamations', icon: 'fas fa-exclamation-circle' },
+    { id: 'reservation', label: 'Réservations', icon: 'fas fa-ticket-alt' },
+    { id: 'feedback', label: 'Feedbacks', icon: 'fas fa-comment-dots' },
+    { id: 'stats', label: 'Statistiques', icon: 'fas fa-chart-bar' },
+  ];
+
   return (
-    <div className="container-fluid px-0">
-      {/* Header */}
-      <header className="bg-dark text-white p-3 shadow-sm">
-        <div className="container-fluid">
-          <div className="d-flex justify-content-between align-items-center">
-            <div>
-              <h1 className="h4 mb-0">Tableau de bord Administrateur</h1>
-              <small className="text-muted">Connecté en tant que : {user?.email}</small>
-            </div>
-            <button 
-              onClick={handleLogout}
-              className="btn btn-danger btn-sm"
-            >
-              <i className="fas fa-sign-out-alt me-1"></i> Déconnexion
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Navigation Tabs */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-        <div className="container-fluid">
-          <ul className="nav nav-tabs border-0 w-100">
-            <li className="nav-item">
-              <button 
-                className={`nav-link ${activeTab === 'events' ? 'active' : ''}`}
-                onClick={() => setActiveTab('events')}
-              >
-                <i className="fas fa-calendar-alt me-2"></i>Gestion Événements
-              </button>
-            </li>
-            <li className="nav-item">
-              <button 
-                className={`nav-link ${activeTab === 'users' ? 'active' : ''}`}
-                onClick={() => setActiveTab('users')}
-              >
-                <i className="fas fa-users me-2"></i>Gestion Utilisateurs
-              </button>
-            </li>
-            <li className="nav-item">
-              <button 
-                className={`nav-link ${activeTab === 'stats' ? 'active' : ''}`}
-                onClick={() => setActiveTab('stats')}
-              >
-                <i className="fas fa-chart-bar me-2"></i>Statistiques
-              </button>
-            </li>
+    <div className="d-flex" style={{ minHeight: '100vh' }}>
+      {/* Sidebar */}
+      <div className="bg-dark text-white p-4" style={{ width: '250px' }}>
+        <h4 className="text-center mb-4">Admin Panel</h4>
+        <nav>
+          <ul className="nav flex-column">
+            {navItems.map((item) => (
+              <li key={item.id} className="nav-item mb-3">
+                <a
+                  href="#!"
+                  onClick={() => setActiveTab(item.id)}
+                  className={`d-flex align-items-center text-decoration-none ps-2 py-2 rounded 
+                    ${activeTab === item.id ? 'bg-primary text-white' : 'text-light'}`}
+                  style={{ fontSize: '16px', transition: 'all 0.2s ease' }}
+                >
+                  <i className={`${item.icon} me-2`}></i>
+                  {item.label}
+                </a>
+              </li>
+            ))}
           </ul>
-        </div>
-      </nav>
+        </nav>
 
-      {/* Main Content */}
-      <main className="container-fluid py-4">
+        <div className="mt-auto">
+          <button
+            className="btn btn-outline-light w-100 mt-5"
+            onClick={handleLogout}
+          >
+            <i className="fas fa-sign-out-alt me-2"></i> Déconnexion
+          </button>
+        </div>
+      </div>
+
+      {/* Main content */}
+      <div className="flex-grow-1 p-4 bg-light">
+        <div className="mb-4">
+          <h2 className="h5">Bienvenue, {user?.email}</h2>
+        </div>
+
         <div className="card shadow-sm">
           <div className="card-body">
-            {activeTab === 'events' ? <EventManagement /> : 
-             activeTab === 'users' ? <UserManagement /> : 
+            {activeTab === 'events' ? <EventManagement /> :
+             activeTab === 'users' ? <UserManagement /> :
+             activeTab === 'reclamation' ? <ReclamationManagement /> :
+             activeTab === 'reservation' ? <ReservationManagement /> :
+             activeTab === 'feedback' ? <AdminFeedbacks /> :
              (
               <div className="stats-section">
                 <h2 className="h4 mb-4">Statistiques</h2>
@@ -85,7 +86,7 @@ export default function AdminDashboard() {
             )}
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

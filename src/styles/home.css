@@ -1,27 +1,23 @@
-/* Ajoutez ceci dans votre fichier CSS principal */
 .icon-circle {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
+  width: 70px;
+  height: 70px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
 }
 
-.min-vh-100 {
-  min-height: 100vh;
+.card:hover .icon-circle {
+  transform: scale(1.1);
 }
 
-.bg-light {
-  background-color: #f8f9fa !important;
+.hover-shadow:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12) !important;
 }
 
-/* Animation au survol des cartes */
-.card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+.transition {
+  transition: all 0.3s ease;
 }

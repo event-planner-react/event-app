@@ -9,7 +9,6 @@ export default function UserManagement() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
 
-  // Simulation de données
   useEffect(() => {
     const mockUsers = [
       { id: 1, email: 'admin@test.com', role: 'admin', name: 'Admin Principal' },
@@ -41,22 +40,25 @@ export default function UserManagement() {
   };
 
   return (
-    <div className="container-fluid py-4">
-      <div className="card shadow-sm">
-        <div className="card-header bg-white d-flex justify-content-between align-items-center">
-          <h2 className="h4 mb-0">Gestion des utilisateurs</h2>
+    <div className="container py-5">
+      <div className="card shadow-lg border-0 rounded-4">
+        <div className="card-header bg-white rounded-top-4 d-flex justify-content-between align-items-center py-3 px-4 border-bottom">
+          <h2 className="h4 fw-bold mb-0 text-primary">
+            <i className="fas fa-users me-2"></i>Gestion des utilisateurs
+          </h2>
           <Button 
             variant="primary" 
+            className="d-flex align-items-center gap-2 rounded-pill px-4"
             onClick={() => {
               setEditingUser(null);
               setShowForm(true);
             }}
           >
-            <i className="fas fa-plus me-2"></i>Ajouter un utilisateur
+            <i className="fas fa-user-plus"></i> Ajouter
           </Button>
         </div>
 
-        <div className="card-body">
+        <div className="card-body p-4">
           <div className="table-responsive">
             <table className="table table-hover align-middle">
               <thead className="table-light">
@@ -75,9 +77,9 @@ export default function UserManagement() {
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>
-                      <Badge 
-                        bg={user.role === 'admin' ? 'primary' : 'secondary'} 
-                        className="text-capitalize"
+                      <Badge
+                        bg={user.role === 'admin' ? 'primary' : 'secondary'}
+                        className="text-capitalize px-3 py-2 rounded-pill"
                       >
                         {user.role}
                       </Badge>
@@ -87,6 +89,8 @@ export default function UserManagement() {
                         <Button 
                           variant="outline-primary" 
                           size="sm"
+                          className="rounded-circle"
+                          title="Modifier"
                           onClick={() => {
                             setEditingUser(user);
                             setShowForm(true);
@@ -97,6 +101,8 @@ export default function UserManagement() {
                         <Button 
                           variant="outline-danger" 
                           size="sm"
+                          className="rounded-circle"
+                          title="Supprimer"
                           onClick={() => confirmDelete(user.id)}
                         >
                           <i className="fas fa-trash-alt"></i>
@@ -114,9 +120,7 @@ export default function UserManagement() {
       {/* Modal pour le formulaire */}
       <Modal show={showForm} onHide={() => setShowForm(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>
-            {editingUser ? 'Modifier utilisateur' : 'Ajouter un utilisateur'}
-          </Modal.Title>
+          <Modal.Title>{editingUser ? 'Modifier utilisateur' : 'Ajouter un utilisateur'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <UserForm 
